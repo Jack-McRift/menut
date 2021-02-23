@@ -1,89 +1,216 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+  <v-app>
+    <v-app-bar
+      fixed
+      app
+      light
+      shrink-on-scroll
+      prominent
+      src="https://www.bizzbeginnings.com/wp-content/uploads/2017/08/chairs-2179044_960_720.jpg"
+      fade-img-on-scroll
+      height="130"
+      elevation="1"
+    >
+      <v-btn icon to="/menuList">
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
+      <v-spacer />
+
+      <template #extension class="white">
+        <v-btn icon>
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+        <v-spacer />
+        <v-menu offset-y>
+          <template #activator="{ on, attrs }">
+            <v-btn icon v-bind="attrs" v-on="on">
+              <v-icon>mdi-translate</v-icon>
+              <v-icon>mdi-chevron-down</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item v-for="(item, index) in langs" :key="index">
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <v-spacer />
+        <v-btn icon to="/filter">
+          <v-icon>mdi-filter-outline</v-icon>
+        </v-btn>
+      </template>
+    </v-app-bar>
+
+    <main>
+      <v-list light>
+        <v-list-item v-for="(list, index) in menuData" :key="index">
+          <v-container>
+            <v-row>
+              <v-list-item-title class="text-h5 font-weight-bold">
+                {{ list.categoryName }}
+              </v-list-item-title>
+            </v-row>
+            <v-row>
+              <v-list class="block">
+                <NuxtLink to="/itemView" class="noLine">
+                  <v-list-item
+                    v-for="(item, i) in list.itemList"
+                    :key="i"
+                    three-line
+                  >
+                    <v-list-item-content>
+                      <v-list-item-title class="text-h6">
+                        {{
+                          item.title
+                        }}
+                      </v-list-item-title>
+                      <v-list-item-subtitle class="font-weight-light">
+                        {{ item.description }}
+                      </v-list-item-subtitle>
+                      <v-list-item-subtitle v-if="item.alergen || item.lifeStyle">
+                        | {{ item.alergen }} {{ item.lifeStyle }}
+                      </v-list-item-subtitle>
+                      <v-list-item-subtitle v-else>
+                        {{ "|" }}
+                      </v-list-item-subtitle>
+                      <v-list-item-title>
+                        {{
+                          item.price
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                        }} Gs.
+                      </v-list-item-title>
+                    </v-list-item-content>
+                    <v-list-item-avatar size="100">
+                      <v-img :src="item.imgUrl" />
+                    </v-list-item-avatar>
+                  </v-list-item>
+                </NuxtLink>
+              </v-list>
+            </v-row>
+          </v-container>
+        </v-list-item>
+      </v-list>
+    </main>
+  </v-app>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
 export default {
-  components: {
-    Logo,
-    VuetifyLogo
-  }
+  data: () => ({
+    langs: [
+      { title: 'Español' },
+      { title: 'English' },
+      { title: 'Dutch' },
+      { title: '日本語' }
+    ],
+    menuData: [
+      {
+        categoryName: 'Bebidas',
+        itemList: [
+          {
+            title: 'Mojito Rosado',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: 'Vegano',
+            price: 33000,
+            imgUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU'
+          },
+          {
+            title: 'Mojito Rosado',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: 'Pescado',
+            lifeStyle: 'Vegano',
+            price: 33000,
+            imgUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU'
+          },
+          {
+            title: 'Mojito Rosado',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU'
+          }
+        ]
+      },
+      {
+        categoryName: 'Cena',
+        itemList: [
+          {
+            title: 'Mojito Rosado',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: 'Vegano',
+            price: 33000,
+            imgUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU'
+          },
+          {
+            title: 'Mojito Rosado',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: 'Pescado',
+            lifeStyle: 'Vegano',
+            price: 33000,
+            imgUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU'
+          },
+          {
+            title: 'Mojito Rosado',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU'
+          }
+        ]
+      },
+      {
+        categoryName: 'Desayuno',
+        itemList: [
+          {
+            title: 'Mojito Rosado',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: 'Vegano',
+            price: 33000,
+            imgUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU'
+          },
+          {
+            title: 'Mojito Rosado',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: 'Pescado',
+            lifeStyle: 'Vegano',
+            price: 33000,
+            imgUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU'
+          },
+          {
+            title: 'Mojito Rosado',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU'
+          }
+        ]
+      }
+    ]
+  })
 }
 </script>
+
+<style>
+.noLine{
+  text-decoration: none;
+}
+.v-toolbar__extension{
+  background: rgb(245, 245, 245);
+}
+</style>
