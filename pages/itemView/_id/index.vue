@@ -2,7 +2,9 @@
   <v-card>
     <v-img :src="item.imgUrl" />
     <v-app-bar light elevation="0">
-      <v-app-bar-title class="text-h5 font-weight-bold">{{ item.title }}</v-app-bar-title>
+      <v-app-bar-title class="text-h5 font-weight-bold">
+        {{ item.title }}
+      </v-app-bar-title>
       <v-spacer />
       <v-btn icon>
         <v-icon>mdi-twitter</v-icon>
@@ -11,7 +13,7 @@
         <v-icon>mdi-instagram</v-icon>
       </v-btn>
     </v-app-bar>
-    <v-btn icon to="/" class="floating">
+    <v-btn icon :to="`/items/${item.id}`" class="floating">
       <v-icon color="black" class="center">
         mdi-arrow-left
       </v-icon>
@@ -31,11 +33,14 @@
     <v-card-text v-else class="grey--text font-weight-light text-h6 text--darken-4">
       No contiene ningun alergeno.
     </v-card-text>
+    <!-- <algo/> -->
   </v-card>
 </template>
 
 <script>
+// import algo from '~/components/algo.vue'
 export default {
+  // components: { algo },
   data () {
     return {
       item: {
@@ -45,7 +50,8 @@ export default {
         alergen: 'Pescado',
         lifeStyle: null,
         price: 33000,
-        imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU'
+        imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
+        id: 1
       }
     }
   }

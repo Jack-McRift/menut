@@ -9,7 +9,7 @@
         Filtrar por
       </v-text>
       <v-spacer />
-      <v-btn icon color="primary" to="/">
+      <v-btn icon color="primary" to="">
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-row>
@@ -23,7 +23,12 @@
         :key="n"
         cols="4"
       >
-        <v-card height="100" />
+        <v-btn outlined height="80" retain-focus-on-click>
+          <v-icon>mdi-jellyfish-outline</v-icon>
+        </v-btn>
+        <v-card-subtitle class="font-weight-light pa-2">
+          Pescado
+        </v-card-subtitle>
       </v-col>
     </v-row>
     <v-row>
@@ -36,7 +41,9 @@
         :key="n"
         cols="4"
       >
-        <v-card height="100" />
+        <v-btn outlined height="80" retain-focus-on-click>
+          <v-icon>mdi-jellyfish-outline</v-icon>
+        </v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -48,5 +55,8 @@
 }
 .center{
   text-align: center;
+}
+.red{
+  color:red
 }
 </style>

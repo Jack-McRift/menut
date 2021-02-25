@@ -50,9 +50,9 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: false,
+      light: true,
       themes: {
-        dark: {
+        light: {
           primary: colors.teal.darken2,
           accent: colors.teal.darken3,
           secondary: colors.amber.darken3,
