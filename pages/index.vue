@@ -15,7 +15,7 @@
         <v-spacer />
         <v-menu offset-y>
           <template #activator="{ on, attrs }">
-            <v-btn elevation="0" rounded v-bind="attrs" v-on="on">
+            <v-btn elevation="0" rounded v-bind="attrs" class="left" v-on="on">
               <svg
                 id="Layer_1"
                 version="1.1"
@@ -75,8 +75,8 @@
           :key="i"
           cols="12"
         >
-          <v-card height="100" class="text" :to="`/items/${item.id}`">
-            <v-text class="category-name text-h5 font-weight-light">
+          <v-card height="80" class="text" :to="`/items/${item.id}`">
+            <v-text class="category-name text-h6 font-weight-light">
               {{ item.title }}
             </v-text>
           </v-card>
@@ -110,9 +110,12 @@ export default {
 }
 .category-name{
   position: relative;
-  top: 40px;
+  top: 20px;
 }
 .size{
   width: 2rem;
+}
+.left{
+  left: 12px;
 }
 </style>

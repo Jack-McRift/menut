@@ -1,53 +1,5 @@
 <template>
   <v-app>
-    <!-- <v-btn
-      fab
-      color="primary"
-      elevation="2"
-      fixed
-      class="fix-btn"
-      @click="dialog=!dialog"
-    >
-      <v-icon>mdi-cart</v-icon>
-    </v-btn> -->
-    <!-- search-overlay -->
-    <v-overlay
-      :value="overlay"
-      z-index="10"
-    >
-      <v-card light>
-        <v-card-title>
-          <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-          />
-        </v-card-title>
-        <v-data-table
-          :headers="headers"
-          :items="menuData[0].itemList"
-          :search="search"
-          mobile-breakpoint="100"
-          items-per-page="4"
-        >
-          <template #[`item.imgUrl`]="{ item }">
-            <img :src="item.imgUrl" :alt="item.title" class="image">
-          </template>
-          <template #[`item.itemView`]>
-            <v-btn to="/itemView" outlined>
-              Ver
-            </v-btn>
-          </template>
-        </v-data-table>
-        <v-row justify="center">
-          <v-btn outlined class="ma-5" @click="overlay=false">
-            close
-          </v-btn>
-        </v-row>
-      </v-card>
-    </v-overlay>
     <!-- app-bar -->
     <v-app-bar
       ref="box"
@@ -70,11 +22,10 @@
       <v-spacer />
 
       <template #extension class="white">
-        <v-btn rounded elevation="0" :class="{'not-show': show}" @click="overlay = !overlay">
+        <v-btn rounded elevation="0" :class="{'not-show': show}" to="/search">
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
-
-        <v-spacer />
+        <v-spacer :class="{'not-show': show}" />
         <v-menu offset-y>
           <template #activator="{ on, attrs }">
             <v-btn rounded elevation="0" v-bind="attrs" :class="{'not-show': show}" v-on="on">
@@ -126,20 +77,25 @@
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-spacer />
+        <v-spacer :class="{'not-show': show}" />
         <v-btn rounded elevation="0" :class="{'not-show': show}" @click="filter = true">
           <v-icon>mdi-filter-outline</v-icon>
         </v-btn>
-        <v-tabs v-for="(item,i) in menuData" :key="i" class="inline" :class="{'not-show': !show}" allow-overflow>
+        <v-section :class="{'not-show': !show}" class="tabs">
           <v-btn
+            v-for="(item,i) in menuData"
+            :key="i"
             rounded
             outlined
             elevation="0"
-            class="mx-1"
+            class="mx-1 dark"
+            :class="{'not-show': !show}"
+            retain-focus-on-click
+            value="tabBtn"
           >
             {{ item.categoryName }}
           </v-btn>
-        </v-tabs>
+        </v-section>
       </template>
     </v-app-bar>
     <!-- filter -->
@@ -148,61 +104,58 @@
       scrollable
       fullscreen
       persistent
-      :overlay="false"
-      max-width="500px"
       transition="dialog-bottom-transition"
     >
-      <v-container justify-center class="pa-10 background">
-        <v-row>
-          <v-spacer />
-          <v-icon color="black">
-            mdi-filter-outline
-          </v-icon>
-          <v-text class="text-h6 black--text">
-            Filtrar por
-          </v-text>
-          <v-spacer />
-          <v-btn icon color="primary" @click="filter = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-row>
-        <v-row>
-          <h3 class="primary--text">
-            <br><br> Alergenos
-          </h3>
-          <v-text> No mostrar los alimentos que contengan:</v-text>
-          <v-col
-            v-for="n in 9"
-            :key="n"
-            cols="4"
-          >
-            <v-btn outlined height="80" retain-focus-on-click>
-              <v-icon>mdi-jellyfish-outline</v-icon>
+      <div class="overlay-container">
+        <v-container justify-center class="pa-10 background">
+          <v-row>
+            <v-spacer />
+            <v-icon color="black">
+              mdi-filter-outline
+            </v-icon>
+            <v-text class="text-h6 black--text font-weight-light">
+              Filtrar por
+            </v-text>
+            <v-spacer />
+            <v-btn icon color="primary" @click="filter = false">
+              <v-icon>mdi-close</v-icon>
             </v-btn>
-            <v-card-subtitle class="font-weight-light pa-2">
-              Pescado
-            </v-card-subtitle>
-          </v-col>
-        </v-row>
-        <v-row>
-          <h3 class="primary--text">
-            <br> Estilo de vida
-          </h3>
-          <v-text>Solo mostrar alimentos que sean aptos para:</v-text>
-          <v-col
-            v-for="n in 3"
-            :key="n"
-            cols="4"
-          >
-            <v-btn outlined height="80" retain-focus-on-click>
-              <v-icon>mdi-jellyfish-outline</v-icon>
+          </v-row>
+          <v-row>
+            <h3 class="primary--text">
+              <br><br> Alergenos
+            </h3>
+            <v-text> No mostrar los alimentos que contengan:</v-text>
+            <v-col
+              v-for="n in 11"
+              :key="n"
+              cols="3"
+              class="less-height"
+            >
+              <filterTile />
+            </v-col>
+          </v-row>
+          <v-row class="less-height">
+            <h3 class="primary--text">
+              <br> Estilo de vida
+            </h3>
+            <v-text>Solo mostrar alimentos que sean aptos para:</v-text>
+            <v-col
+              v-for="n in 3"
+              :key="n"
+              cols="3"
+            >
+              <filterTile />
+            </v-col>
+            <v-btn class="px-16 py-6  font-weight-light" dark>
+              Aplicar Filtros
             </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
+          </v-row>
+        </v-container>
+      </div>
     </v-dialog>
     <!-- content -->
-    <main>
+    <main class="d-flex justify-center">
       <v-list light class="top-space">
         <v-list-item v-for="(list, index) in menuData" :key="index">
           <v-container>
@@ -274,13 +227,6 @@
                           .toString()
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
                       }} Gs.
-                      <!-- <v-btn outlined rounded color="primary" small @click="substract(item)">
-                        -
-                      </v-btn>
-                      <v-text>{{ item.quantity }}</v-text>
-                      <v-btn outlined rounded color="primary" small @click="add(item)">
-                        +
-                      </v-btn> -->
                     </v-list-item-subtitle>
                   </v-list-item-content>
 
@@ -295,113 +241,26 @@
         </v-list-item>
       </v-list>
     </main>
-    <!-- cart -->
-    <!-- <v-dialog
-      v-model="dialog"
-      fullscreen
-      transition="dialog-bottom-transition"
-      z-index="11"
-    >
-      <v-card class="pt-16">
-        <v-card-title class="fixed">
-          Tu lista
-          <v-spacer />
-          <v-btn icon @click="dialog=false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-card-title>
-        <v-list>
-          <v-list-item
-            v-for="(item, i) in carList"
-            :key="i"
-            three-line
-          >
-            <v-list-item-content>
-              <v-list-item-title class="text-h6">
-                {{
-                  item.title
-                }}
-              </v-list-item-title>
-              <v-list-item-subtitle class="font-weight-light">
-                {{ item.description }}
-              </v-list-item-subtitle>
-              <v-list-item-subtitle v-if="item.alergen || item.lifeStyle">
-                | {{ item.alergen }} {{ item.lifeStyle }}
-              </v-list-item-subtitle>
-              <v-list-item-subtitle v-else>
-                {{ "|" }}
-              </v-list-item-subtitle>
-              <v-list-item-title>
-                {{
-                  item.price
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-                }} Gs.
-                <v-spacer />
-                <v-btn outlined rounded color="primary" small @click="substract(item)">
-                  -
-                </v-btn>
-                <v-text>{{ item.quantity }}</v-text>
-                <v-btn outlined rounded color="primary" small @click="add(item)">
-                  +
-                </v-btn>
-              </v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-avatar size="100">
-              <v-img :src="item.imgUrl" />
-            </v-list-item-avatar>
-          </v-list-item>
-        </v-list>
-        <v-divider />
-        <v-container class="pa-16">
-          <v-row justify="space-between">
-            <v-text>
-              Subtotal:  <br>
-            </v-text>
-            {{ orderSubtotal()
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} Gs.
-          </v-row>
-          <v-row justify="space-between">
-            <v-text>
-              IVA ({{ iva }}%):  <br>
-            </v-text>
-            {{ (orderSubtotal()*(iva/100))
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} Gs.
-          </v-row>
-          <v-row justify="space-between">
-            <v-text>
-              Total:  <br>
-            </v-text>
-            {{ (orderSubtotal()*(iva/100)+orderSubtotal())
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} Gs.
-          </v-row>
-        </v-container>
-        <v-row justify="center" class="pb-10">
-          <v-btn outlined class="bottom">
-            Llamar al mesero
-          </v-btn>
-        </v-row>
-      </v-card>
-    </v-dialog> -->
   </v-app>
 </template>
 
 <script>
+import filterTile from '~/components/filterTile.vue'
 export default {
+  components: {
+    filterTile
+  },
   data: () => ({
     absolute: true,
     overlay: false,
     dialog: false,
     search: '',
-    iva: 20,
     filter: false,
     show: false,
     lastScrollPosition: 0,
     btnState: false,
     carList: [],
+    tabBtn: false,
     langs: [
       { title: 'Español', iconRoute: '/spain.svg' },
       { title: 'English', iconRoute: '/united-kingdom.svg' },
@@ -414,6 +273,150 @@ export default {
       { text: 'Ver item', value: 'itemView' }
     ],
     menuData: [
+      {
+        categoryName: 'Bebidas',
+        itemList: [
+          {
+            title: 'Coctel',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
+            quantity: 0,
+            isInCar: false,
+            id: 0
+          }, {
+            title: 'Coctel',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
+            quantity: 0,
+            isInCar: false,
+            id: 1
+          }, {
+            title: 'Mojito Rosado',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
+            quantity: 0,
+            isInCar: false,
+            id: 3
+          }
+        ]
+      },
+      {
+        categoryName: 'Bebidas',
+        itemList: [
+          {
+            title: 'Coctel',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
+            quantity: 0,
+            isInCar: false,
+            id: 0
+          }, {
+            title: 'Coctel',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
+            quantity: 0,
+            isInCar: false,
+            id: 1
+          }, {
+            title: 'Mojito Rosado',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
+            quantity: 0,
+            isInCar: false,
+            id: 3
+          }
+        ]
+      },
+      {
+        categoryName: 'Bebidas',
+        itemList: [
+          {
+            title: 'Coctel',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
+            quantity: 0,
+            isInCar: false,
+            id: 0
+          }, {
+            title: 'Coctel',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
+            quantity: 0,
+            isInCar: false,
+            id: 1
+          }, {
+            title: 'Mojito Rosado',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
+            quantity: 0,
+            isInCar: false,
+            id: 3
+          }
+        ]
+      },
+      {
+        categoryName: 'Bebidas',
+        itemList: [
+          {
+            title: 'Coctel',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
+            quantity: 0,
+            isInCar: false,
+            id: 0
+          }, {
+            title: 'Coctel',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
+            quantity: 0,
+            isInCar: false,
+            id: 1
+          }, {
+            title: 'Mojito Rosado',
+            description: 'Tomate y vodka con un pinto de picante.',
+            alergen: null,
+            lifeStyle: null,
+            price: 33000,
+            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
+            quantity: 0,
+            isInCar: false,
+            id: 3
+          }
+        ]
+      },
       {
         categoryName: 'Bebidas',
         itemList: [
@@ -595,6 +598,8 @@ export default {
 }
 .background{
   background: white;
+  width: 375px;
+  height: 100%;
 }
 .v-list-item{
   padding: 0;
@@ -616,7 +621,7 @@ export default {
 }
 .space-between-items{
   padding: 4px;
-  padding-right: 30px;
+  padding-right: 0px;
   font-family: 'Work Sans', sans-serif;
 }
 .work-sans{
@@ -630,5 +635,32 @@ export default {
 }
 .size{
   width: 2rem;
+}
+.tabs{
+  position: relative;
+  width: auto;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  overflow: auto;
+  white-space: nowrap;
+  padding-bottom: 6px;
+}
+.less-height{
+  height: 85px;
+}
+.py-6{
+  width: 80%;
+  position: fixed;
+  left: 10vw;
+  bottom: 10vw;
+}
+.overlay-container{
+  width: 100vw;
+  background: white;
+}
+.dark:focus{
+  background: black;
+  color: white;
 }
 </style>
