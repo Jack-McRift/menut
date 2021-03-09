@@ -548,7 +548,7 @@ export default {
         item.isInCar = true
       }
     },
-    substract (item) {
+    subtract (item) {
       if (item.quantity > 0) { item.quantity -= 1 }
       if (item.quantity === 0) {
         this.carList = this.carList.filter(i => i.id !== item.id)
@@ -571,7 +571,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap')
 .noLine{
   text-decoration: none;
 }
@@ -602,16 +602,13 @@ export default {
   height: 100%;
 }
 .v-list-item{
-  padding: 0;
-  padding-left: 10px;
-  padding-bottom: 10px;
+  padding: 0 0 10px 10px;
 }
 .not-show{
   display: none;
 }
 .container{
-  padding: 5px;
-  padding-bottom: 30px;
+  padding: 5px 5px 30px;
 }
 .item-image{
   position: relative;
@@ -620,8 +617,7 @@ export default {
   top: 20px;
 }
 .space-between-items{
-  padding: 4px;
-  padding-right: 0px;
+  padding: 4px 0px 4px 4px;
   font-family: 'Work Sans', sans-serif;
 }
 .work-sans{

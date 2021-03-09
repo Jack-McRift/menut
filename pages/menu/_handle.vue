@@ -33,8 +33,14 @@
                   d="M0,256c0,31.314,5.633,61.31,15.923,89.043L256,367.304l240.077-22.261C506.367,317.31,512,287.314,512,256s-5.633-61.31-15.923-89.043L256,144.696L15.923,166.957C5.633,194.69,0,224.686,0,256z"
                 />
                 <g>
-                  <path style="fill:#D80027;" d="M496.077,166.957C459.906,69.473,366.071,0,256,0S52.094,69.473,15.923,166.957H496.077z" />
-                  <path style="fill:#D80027;" d="M15.923,345.043C52.094,442.527,145.929,512,256,512s203.906-69.473,240.077-166.957H15.923z" />
+                  <path
+                    style="fill:#D80027;"
+                    d="M496.077,166.957C459.906,69.473,366.071,0,256,0S52.094,69.473,15.923,166.957H496.077z"
+                  />
+                  <path
+                    style="fill:#D80027;"
+                    d="M15.923,345.043C52.094,442.527,145.929,512,256,512s203.906-69.473,240.077-166.957H15.923z"
+                  />
                 </g>
                 <g />
                 <g />
@@ -71,13 +77,13 @@
     <v-container>
       <v-row>
         <v-col
-          v-for="(item, i) in data"
+          v-for="(item, i) in menus"
           :key="i"
           cols="12"
         >
           <v-card height="80" class="text" :to="`/items/${item.id}`">
             <div class="category-name text-h6 font-weight-light">
-              {{ item.title }}
+              {{ item.name }}
             </div>
           </v-card>
         </v-col>
@@ -90,32 +96,42 @@
 export default {
   data: () => ({
     langs: [
-      { title: 'Español', iconRoute: '/spain.svg' },
-      { title: 'English', iconRoute: '/united-kingdom.svg' },
-      { title: 'Portugueses', iconRoute: '/portugal.svg' }
+      {
+        title: 'Español',
+        iconRoute: '/spain.svg'
+      },
+      {
+        title: 'English',
+        iconRoute: '/united-kingdom.svg'
+      },
+      {
+        title: 'Portugueses',
+        iconRoute: '/portugal.svg'
+      }
     ],
-    data: [
-      { title: 'Desayuno', id: 0 },
-      { title: 'Almuerzo', id: 1 },
-      { title: 'Bebidas', id: 2 },
-      { title: 'Entradas', id: 3 }
-    ]
-  })
+    menus: []
+  }),
+  async mounted () {
+    this.menus = await this.$axios.$get(`https://localhost:5001/api/menu/r/${this.$route.params.handle}?take=100`)
+  }
 }
 </script>
 
 <style scoped>
-.text{
+.text {
   text-align: center;
 }
-.category-name{
+
+.category-name {
   position: relative;
   top: 20px;
 }
-.size{
+
+.size {
   width: 2rem;
 }
-.left{
+
+.left {
   left: 12px;
 }
 </style>
