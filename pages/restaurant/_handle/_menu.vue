@@ -21,82 +21,7 @@
       </v-app-bar-title>
       <v-spacer />
 
-      <template #extension class="white">
-        <v-btn rounded elevation="0" :class="{'not-show': show}" to="/search">
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-        <v-spacer :class="{'not-show': show}" />
-        <v-menu offset-y>
-          <template #activator="{ on, attrs }">
-            <v-btn rounded elevation="0" v-bind="attrs" :class="{'not-show': show}" v-on="on">
-              <svg
-                id="Layer_1"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                x="0px"
-                y="0px"
-                viewBox="0 0 512 512"
-                style="enable-background:new 0 0 512 512;"
-                xml:space="preserve"
-                class="size"
-              >
-                <path
-                  style="fill:#FFDA44;"
-                  d="M0,256c0,31.314,5.633,61.31,15.923,89.043L256,367.304l240.077-22.261C506.367,317.31,512,287.314,512,256s-5.633-61.31-15.923-89.043L256,144.696L15.923,166.957C5.633,194.69,0,224.686,0,256z"
-                />
-                <g>
-                  <path style="fill:#D80027;" d="M496.077,166.957C459.906,69.473,366.071,0,256,0S52.094,69.473,15.923,166.957H496.077z" />
-                  <path style="fill:#D80027;" d="M15.923,345.043C52.094,442.527,145.929,512,256,512s203.906-69.473,240.077-166.957H15.923z" />
-                </g>
-                <g />
-                <g />
-                <g />
-                <g />
-                <g />
-                <g />
-                <g />
-                <g />
-                <g />
-                <g />
-                <g />
-                <g />
-                <g />
-                <g />
-                <g />
-              </svg>
-              <v-icon>mdi-chevron-down</v-icon>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item v-for="(item, index) in langs" :key="index" class="pa-2">
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-              <v-list-item-avatar>
-                <v-img :src="item.iconRoute" />
-              </v-list-item-avatar>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-        <v-spacer :class="{'not-show': show}" />
-        <v-btn rounded elevation="0" :class="{'not-show': show}" @click="filter = true">
-          <v-icon>mdi-filter-outline</v-icon>
-        </v-btn>
-        <div :class="{'not-show': !show}" class="tabs">
-          <v-btn
-            v-for="(item,i) in menuData"
-            :key="i"
-            rounded
-            outlined
-            elevation="0"
-            class="mx-1 dark"
-            :class="{'not-show': !show}"
-            retain-focus-on-click
-            value="tabBtn"
-          >
-            {{ item.categoryName }}
-          </v-btn>
-        </div>
-      </template>
+      <language-select></language-select>
     </v-app-bar>
     <!-- filter -->
     <v-dialog
@@ -167,14 +92,14 @@
             <v-row>
               <v-list class="block">
                 <v-list-item
-                  v-for="(item, i) in list.itemList"
+                  v-for="(item, i) in list.items"
                   :key="i"
                   three-line
                 >
                   <v-list-item-content>
                     <v-list-item-title class="text-body-1 font-weight-bold space-between-items">
                       {{ i+1 }}.{{
-                        item.title
+                        item.name
                       }}
                     </v-list-item-title>
                     <v-list-item-subtitle class="font-weight-light space-between-items">
@@ -222,11 +147,7 @@
                       </svg>
                     </v-list-item-subtitle>
                     <v-list-item-subtitle class="space-between-item font-weight-bold">
-                      {{
-                        item.price
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-                      }} Gs.
+                      {{ item.price.replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}
                     </v-list-item-subtitle>
                   </v-list-item-content>
 
@@ -272,263 +193,11 @@ export default {
       { text: 'Precio', value: 'price' },
       { text: 'Ver item', value: 'itemView' }
     ],
-    menuData: [
-      {
-        categoryName: 'Bebidas',
-        itemList: [
-          {
-            title: 'Coctel',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 0
-          }, {
-            title: 'Coctel',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 1
-          }, {
-            title: 'Mojito Rosado',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 3
-          }
-        ]
-      },
-      {
-        categoryName: 'Bebidas',
-        itemList: [
-          {
-            title: 'Coctel',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 0
-          }, {
-            title: 'Coctel',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 1
-          }, {
-            title: 'Mojito Rosado',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 3
-          }
-        ]
-      },
-      {
-        categoryName: 'Bebidas',
-        itemList: [
-          {
-            title: 'Coctel',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 0
-          }, {
-            title: 'Coctel',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 1
-          }, {
-            title: 'Mojito Rosado',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 3
-          }
-        ]
-      },
-      {
-        categoryName: 'Bebidas',
-        itemList: [
-          {
-            title: 'Coctel',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 0
-          }, {
-            title: 'Coctel',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 1
-          }, {
-            title: 'Mojito Rosado',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 3
-          }
-        ]
-      },
-      {
-        categoryName: 'Bebidas',
-        itemList: [
-          {
-            title: 'Coctel',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 0
-          }, {
-            title: 'Coctel',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 1
-          }, {
-            title: 'Mojito Rosado',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 3
-          }
-        ]
-      },
-      {
-        categoryName: 'Bebidas',
-        itemList: [
-          {
-            title: 'Coctel',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 0
-          }, {
-            title: 'Coctel',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 1
-          }, {
-            title: 'Mojito Rosado',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 3
-          }
-        ]
-      },
-      {
-        categoryName: 'Bebidas',
-        itemList: [
-          {
-            title: 'Coctel',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 0
-          }, {
-            title: 'Coctel',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 1
-          }, {
-            title: 'Mojito Rosado',
-            description: 'Tomate y vodka con un pinto de picante.',
-            alergen: null,
-            lifeStyle: null,
-            price: 33000,
-            imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-            quantity: 0,
-            isInCar: false,
-            id: 3
-          }
-        ]
-      }
-    ]
+    menuData: []
   }),
-  mounted () {
+  async mounted () {
     window.addEventListener('scroll', this.onScroll)
+    this.menuData = await this.$axios.$get(`https://localhost:5001/api/menuitems/r/${this.$route.params.menu}`)
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.onScroll)
@@ -571,7 +240,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
 .noLine{
   text-decoration: none;
 }
