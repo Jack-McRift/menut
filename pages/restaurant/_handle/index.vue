@@ -38,7 +38,7 @@ export default {
     menus: []
   }),
   async mounted () {
-    this.menus = await this.$axios.$get(`https://localhost:5001/api/menu/r/${this.$route.params.handle}?take=100`)
+    this.menus = await this.$axios.$get(`api/menu/r/${this.$route.params.handle}?take=100`)
   }
 }
 </script>

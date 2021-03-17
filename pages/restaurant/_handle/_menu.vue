@@ -16,12 +16,12 @@
       <v-btn icon to="/">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
-      <v-app-bar-title :class="{'not-show': !show}">
+      <v-app-bar-title>
         Menuit
       </v-app-bar-title>
       <v-spacer />
 
-      <language-select></language-select>
+      <language-select />
     </v-app-bar>
     <!-- filter -->
     <v-dialog
@@ -177,16 +177,10 @@ export default {
     dialog: false,
     search: '',
     filter: false,
-    show: false,
     lastScrollPosition: 0,
     btnState: false,
     carList: [],
     tabBtn: false,
-    langs: [
-      { title: 'Español', iconRoute: '/spain.svg' },
-      { title: 'English', iconRoute: '/united-kingdom.svg' },
-      { title: 'Portugueses', iconRoute: '/portugal.svg' }
-    ],
     headers: [
       { text: 'Imagen', value: 'imgUrl' },
       { text: 'Nombre', value: 'title' },
@@ -196,11 +190,7 @@ export default {
     menuData: []
   }),
   async mounted () {
-    window.addEventListener('scroll', this.onScroll)
     this.menuData = await this.$axios.$get(`https://localhost:5001/api/menuitems/r/${this.$route.params.menu}`)
-  },
-  beforeDestroy () {
-    window.removeEventListener('scroll', this.onScroll)
   },
   methods: {
     orderSubtotal () {
@@ -223,17 +213,6 @@ export default {
         this.carList = this.carList.filter(i => i.id !== item.id)
         item.isInCar = false
       }
-    },
-    onScroll () {
-      const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
-      if (currentScrollPosition < 0) {
-        return
-      }
-      if (Math.abs(currentScrollPosition - this.lastScrollPosition) < 60) {
-        return
-      }
-      this.show = currentScrollPosition > 100
-      this.lastScrollPosition = currentScrollPosition
     }
   }
 }
@@ -323,9 +302,5 @@ export default {
 .overlay-container{
   width: 100vw;
   background: white;
-}
-.dark:focus{
-  background: black;
-  color: white;
 }
 </style>
