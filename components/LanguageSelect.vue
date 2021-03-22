@@ -114,5 +114,47 @@ export default {
 .size{
   width: 2rem;
 }
-
+.v-list-item{
+  padding: 0 0 10px 10px;
+}
+.not-show{
+  display: none;
+}
+.container{
+  padding: 5px 5px 30px;
+}
+.v-toolbar__extension{
+  background: rgb(245, 245, 245);
+}
+.image{
+  height: 5rem;
+  padding-top: .5rem;
+}
+.fix-btn{
+  bottom: 1rem;
+  right: 1rem;
+}
+/* .bottom{
+  position: absolute;
+  bottom: 1rem;
+} */
+.inline{
+  display: inline;
+}
+.center{
+  text-align: center;
+}
+.size{
+  width: 2rem;
+}
+.tabs{
+  position: relative;
+  width: auto;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  overflow: auto;
+  white-space: nowrap;
+  padding-bottom: 6px;
+}
 </style>

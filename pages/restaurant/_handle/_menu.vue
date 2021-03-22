@@ -190,7 +190,7 @@ export default {
     menuData: []
   }),
   async mounted () {
-    this.menuData = await this.$axios.$get(`https://localhost:5001/api/menuitems/r/${this.$route.params.menu}`)
+    this.menuData = await this.$axios.$get(`/api/menuitems/r/${this.$route.params.menu}`)
   },
   methods: {
     orderSubtotal () {
@@ -223,40 +223,10 @@ export default {
 .noLine{
   text-decoration: none;
 }
-.v-toolbar__extension{
-  background: rgb(245, 245, 245);
-}
-.image{
-  height: 5rem;
-  padding-top: .5rem;
-}
-.fix-btn{
-  bottom: 1rem;
-  right: 1rem;
-}
-/* .bottom{
-  position: absolute;
-  bottom: 1rem;
-} */
-.inline{
-  display: inline;
-}
-.center{
-  text-align: center;
-}
 .background{
   background: white;
   width: 375px;
   height: 100%;
-}
-.v-list-item{
-  padding: 0 0 10px 10px;
-}
-.not-show{
-  display: none;
-}
-.container{
-  padding: 5px 5px 30px;
 }
 .item-image{
   position: relative;

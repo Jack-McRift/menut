@@ -40,13 +40,12 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
-    ['@nuxtjs/dotenv', { filename: '.env' }]
+    '@nuxtjs/axios'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: process.env.baseURL
+    baseURL: 'https://localhost:5001/'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

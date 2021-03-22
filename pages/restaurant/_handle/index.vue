@@ -11,10 +11,10 @@
       height="130"
       elevation="1"
     >
-      <language-select />
+    <!--      <language-select />-->
     </v-app-bar>
 
-    <v-container>
+    <v-container v-if="!loading">
       <v-row>
         <v-col
           v-for="(item, i) in menus"
@@ -35,10 +35,15 @@
 <script>
 export default {
   data: () => ({
-    menus: []
+    menus: [],
+    loading: true
   }),
-  async mounted () {
-    this.menus = await this.$axios.$get(`api/menu/r/${this.$route.params.handle}?take=100`)
+  mounted () {
+    this.$axios
+      .$get(`/api/menu/r/${this.$route.params.handle}?take=100`).then((x) => {
+      return this.menus = x
+    })
+    this.loading = false
   }
 }
 </script>
@@ -51,13 +56,5 @@ export default {
 .category-name {
   position: relative;
   top: 20px;
-}
-
-.size {
-  width: 2rem;
-}
-
-.left {
-  left: 12px;
 }
 </style>
