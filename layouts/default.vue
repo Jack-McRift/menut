@@ -29,6 +29,9 @@ export default {
 }
 </script>
 <style scoped>
+*{
+  font-family: "Work Sans", sans-serif;
+}
 .white{
   background: #ffffff;
 }

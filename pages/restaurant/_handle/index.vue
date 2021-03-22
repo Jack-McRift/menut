@@ -38,11 +38,9 @@ export default {
     menus: [],
     loading: true
   }),
-  mounted () {
-    this.$axios
-      .$get(`/api/menu/r/${this.$route.params.handle}?take=100`).then((x) => {
-      return this.menus = x
-    })
+  async mounted () {
+    this.menus = await this.$axios
+      .$get(`/api/menu/r/${this.$route.params.handle}?take=100`)
     this.loading = false
   }
 }
