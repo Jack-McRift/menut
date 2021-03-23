@@ -1,6 +1,15 @@
 <template>
-  <v-card elevation="0" tile style="min-width: 320px; width: 90vw; max-width: 420px" class="my-4 pa-2" :to="`itemView/${itemId}`">
-    <h3 style="width: 250px" class="body-1 font-weight-bold">
+  <v-card
+    elevation="0"
+    tile
+    style="min-width: 320px; width: 90vw; max-width: 420px"
+    class="my-4 pa-2"
+    :to="`/restaurant/${$route.params.handle}/${$route.params.menu}/item/${itemId}`"
+  >
+    <h3
+      style="width:250px"
+      class="body-1 font-weight-bold"
+    >
       {{ index + 1 }}. {{ title }}
     </h3>
     <div class="d-flex justify-space-between">
