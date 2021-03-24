@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app v-if="menuData">
     <!-- app-bar -->
     <v-app-bar
       ref="box"
@@ -38,7 +38,7 @@
         </v-btn>
         <div :class="{ 'not-show': !show }" class="tabs">
           <v-btn
-            v-for="(item, i) in menuData"
+            v-for="(category, i) in categories"
             :key="i"
             rounded
             outlined
@@ -47,8 +47,9 @@
             :class="{ 'not-show': !show }"
             retain-focus-on-click
             value="tabBtn"
+            @click="changeCategory(category, show)"
           >
-            {{ item.categoryName }}
+            {{ category }}
           </v-btn>
         </div>
       </template>
@@ -137,27 +138,30 @@
         >
           <v-container>
             <v-row>
-              <v-list-item-title class="text-h6 font-weight-black work-sans">
+              <v-list-item-title class="text-h6 font-weight-black work-sans text-capitalize">
                 {{ category }}
               </v-list-item-title>
             </v-row>
             <v-row>
               <v-list>
-                <v-list-item
+                <div
                   v-for="(item, i) in menuData"
                   :key="i"
-                  three-line
-                  class="pa-0"
                 >
-                  <Item
+                  <v-list-item
                     v-if="item.categoryName === category"
-                    :item-id="item.id"
-                    :title="item.name"
-                    :index="i"
-                    :description="item.description"
-                    :price="item.price"
-                  />
-                </v-list-item>
+                    three-line
+                    class="pa-0"
+                  >
+                    <Item
+                      :item-id="item.id"
+                      :title="item.name"
+                      :index="i"
+                      :description="item.description"
+                      :price="item.price"
+                    />
+                  </v-list-item>
+                </div>
                 <v-divider />
               </v-list>
             </v-row>
@@ -201,32 +205,33 @@ export default {
   watch: {
     async pageLanguage () {
       this.menuData = await this.$axios.$get(
-      `/api/menuitems/p/menu/${this.$route.params.menu}`
+      `/api/menuitems/p/menu/${this.$route.params.menu}?lang=${this.pageLanguage.lang}`
       )
       for (let i = 0; i < this.menuData.length; i++) {
         if (!this.categories.includes(this.menuData[i].categoryName)) {
           this.categories.push(this.menuData[i].categoryName)
         }
       }
-      console.log(this.$route)
     }
   },
   async mounted () {
     window.addEventListener('scroll', this.onScroll)
     this.menuData = await this.$axios.$get(
-      `/api/menuitems/p/menu/${this.$route.params.menu}`
+      `/api/menuitems/p/menu/${this.$route.params.menu}?lang=${this.pageLanguage.lang}`
     )
     for (let i = 0; i < this.menuData.length; i++) {
       if (!this.categories.includes(this.menuData[i].categoryName)) {
         this.categories.push(this.menuData[i].categoryName)
       }
     }
-    console.log(this.$route)
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.onScroll)
   },
   methods: {
+    changeCategory (category) {
+      this.categories = [category]
+    },
     onScroll () {
       const currentScrollPosition =
         window.pageYOffset || document.documentElement.scrollTop

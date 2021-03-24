@@ -3,12 +3,12 @@
     <v-container fluid>
       <v-row class="justify-center">
         <v-text-field
+          v-model="inputSearch"
           placeholder="Buscar"
           solo
           style="max-width: 500px"
           class="mt-5"
           height="60"
-          :value="inputSearch"
         >
           <template #append>
             <v-btn icon :to="`/restaurant/${$route.params.handle}/${$route.params.menu}`" color="primary">
@@ -21,11 +21,18 @@
     <v-row class="justify-center">
       <v-list>
         <v-list-item
-          v-for="(item, i) in dataBase[0].itemList"
+          v-for="(item, i) in filteredData"
           :key="i"
           three-line
         >
-          <item :index="i" :title="item.title" :price="item.price" :description="item.description" :url="item.imgUrl" />
+          <item
+            :index="i"
+            :title="item.title"
+            :price="item.price"
+            :item-id="item.id"
+            :description="item.description"
+            :url="item.imgUrl"
+          />
         </v-list-item>
         <v-divider />
       </v-list>
@@ -41,55 +48,29 @@ export default {
   data () {
     return {
       inputSearch: '',
-      dataBase: [
-        {
-          categoryName: 'Bebidas',
-          itemList: [
-            {
-              title: 'Coctel',
-              description: 'Tomate y vodka con un pinto de picante.',
-              alergen: null,
-              lifeStyle: null,
-              price: 33000,
-              imgUrl:
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-              quantity: 0,
-              isInCar: false,
-              id: 0
-            },
-            {
-              title: 'Coctel',
-              description: 'Tomate y vodka con un pinto de picante.',
-              alergen: null,
-              lifeStyle: null,
-              price: 33000,
-              imgUrl:
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-              quantity: 0,
-              isInCar: false,
-              id: 1
-            },
-            {
-              title: 'Mojito Rosado',
-              description: 'Tomate y vodka con un pinto de picante.',
-              alergen: null,
-              lifeStyle: null,
-              price: 33000,
-              imgUrl:
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEqDaAIh6d4oLqb6J0uRJUR4Z-R0MSam32UA&usqp=CAU',
-              quantity: 0,
-              isInCar: false,
-              id: 3
-            }
-          ]
-        }
-      ],
+      search: [],
       filteredData: []
     }
   },
-
-  mounted () {
-    //
+  computed: {
+    pageLanguage () {
+      return this.$store.state.langs.lang
+    }
+  },
+  watch: {
+    inputSearch () {
+      if (this.inputSearch === '') {
+        this.filteredData = this.search
+      } else {
+        this.filteredData = this.search.filter(elem => elem.name.toUpperCase().includes(this.inputSearch.toUpperCase()))
+      }
+    }
+  },
+  async mounted () {
+    this.search = await this.$axios.$get(
+      `/api/menuitems/p/menu/${this.$route.params.menu}?lang=${this.pageLanguage.lang}`
+    )
+    this.filteredData = this.search
   }
 }
 </script>
