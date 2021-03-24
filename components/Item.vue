@@ -8,7 +8,7 @@
   >
     <h3
       style="width:250px"
-      class="body-1 font-weight-bold"
+      class="body-1 font-weight-bold text-capitalize"
     >
       {{ index + 1 }}. {{ title }}
     </h3>
@@ -17,8 +17,12 @@
         <p class="text-body-2 font-weight-light">
           {{ description }}
         </p>
-        <div>
-          <!-- alergenos aqui -->
+        <div class="d-flex">
+          <div v-for="(icon, i) in allergens" :key="i">
+            <img style="width: 20px" :src="icon.icon">
+          </div>
+          <img v-if="vegan" style="width: 23px; height: 23px" src="/filterTiles/vegan.svg">
+          <img v-if="vegetarian" style="width: 23px; height: 23px" src="/filterTiles/vegetarian.svg">
         </div>
         <Money class="font-weight-medium body-1 money mb-1" :value="price" />
       </div>
@@ -45,7 +49,10 @@ export default {
     url: String,
     index: Number,
     description: String,
-    price: Number
+    price: Number,
+    allergens: [],
+    vegan: Boolean,
+    vegetarian: Boolean
   }
 }
 </script>

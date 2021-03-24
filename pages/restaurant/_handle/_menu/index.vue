@@ -1,5 +1,5 @@
 <template>
-  <v-app v-if="menuData">
+  <v-app v-if="filters">
     <!-- app-bar -->
     <v-app-bar
       ref="box"
@@ -93,14 +93,14 @@
               No mostrar alimentos que contengan:
             </p>
             <v-container>
-              <v-row style="max-width: 315px" class="mx-auto">
+              <v-row style="max-width: 360px" class="mx-auto">
                 <div
-                  v-for="(filterTile, j) in 15"
-                  :key="j"
+                  v-for="(filterTile, i) in filters"
+                  :key="i"
                   class="ma-1"
-                  style="width: 70px; height: 70px"
+                  style="width: 80px; height: 80px"
                 >
-                  <filter-tile />
+                  <filter-tile :name="filterTile.name" :url="filterTile.icon" :value="filterTile.id" />
                 </div>
               </v-row>
             </v-container>
@@ -113,14 +113,11 @@
               Solo mostrar los alimentos que sean aptos para:
             </p>
             <v-container>
-              <v-row style="max-width: 315px" class="mx-auto">
-                <div
-                  v-for="(filterTile, j) in 3"
-                  :key="j"
-                  class="ma-1"
-                  style="width: 70px; height: 70px"
-                >
-                  <filter-tile />
+              <v-row style="max-width: 360px" class="mx-auto">
+                <div class="d-flex">
+                  <filter-tile class="ma-1" :value="'vegetarian'" :name="'vegetariano'" :url="'/filterTiles/vegetarian.svg'" />
+                  <filter-tile class="ma-1" :value="'vegan'" :name="'vegano'" :url="'/filterTiles/vegan.svg'" />
+                  <filter-tile class="ma-1" :name="'ninguno'" :url="'/filterTiles/none.svg'" />
                 </div>
               </v-row>
             </v-container>
@@ -145,7 +142,7 @@
             <v-row>
               <v-list>
                 <div
-                  v-for="(item, i) in menuData"
+                  v-for="(item, i) in items"
                   :key="i"
                 >
                   <v-list-item
@@ -159,6 +156,9 @@
                       :index="i"
                       :description="item.description"
                       :price="item.price"
+                      :allergens="item.allergens"
+                      :vegan="item.isVegan"
+                      :vegetarian="item.isVegetarian"
                     />
                   </v-list-item>
                 </div>
@@ -193,13 +193,27 @@ export default {
       lastScrollPosition: 0,
       btnState: false,
       tabBtn: false,
-      menuData: [],
-      categories: []
+      menuData: null,
+      categories: [],
+      filteredData: null,
+      filters: null
     }
   },
   computed: {
     pageLanguage () {
       return this.$store.state.langs.lang
+    },
+    filterSelected () {
+      return this.$store.state.filters.selectedFilters
+    },
+    items () {
+      return this.$store.state.filters?.items ?? []
+    },
+    isVegan () {
+      return this.$store.state.filters.isVegan
+    },
+    isVegetarian () {
+      return this.$store.state.filters.isVegetarian
     }
   },
   watch: {
@@ -212,6 +226,15 @@ export default {
           this.categories.push(this.menuData[i].categoryName)
         }
       }
+    },
+    filterSelected () {
+      this.$store.commit('filters/setItems', this.menuData)
+    },
+    isVegan () {
+      this.$store.commit('filters/setItems', this.menuData)
+    },
+    isVegetarian () {
+      this.$store.commit('filters/setItems', this.menuData)
     }
   },
   async mounted () {
@@ -224,6 +247,9 @@ export default {
         this.categories.push(this.menuData[i].categoryName)
       }
     }
+    this.$store.commit('filters/setItems', this.menuData)
+
+    this.filters = await this.$axios.$get(`/api/Allergens?skip=0&take=100&lang=${this.pageLanguage}`)
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.onScroll)
