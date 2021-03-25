@@ -52,7 +52,6 @@ export default {
   },
   methods: {
     changeLang (lang) {
-      this.pageLanguage = lang
       this.$store.commit('langs/changeLanguage', lang)
     }
   }

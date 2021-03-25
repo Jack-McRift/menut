@@ -92,7 +92,7 @@
             <p class="px-3 subtitle">
               No mostrar alimentos que contengan:
             </p>
-            <v-container class="pa-0">
+            <v-container class="pa-0 ">
               <v-row style="max-width: 360px" class="mx-auto">
                 <div
                   v-for="(filterTile, i) in filters"

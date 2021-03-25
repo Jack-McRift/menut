@@ -50,7 +50,7 @@ export default {
     index: Number,
     description: String,
     price: Number,
-    allergens: [],
+    allergens: Array,
     vegan: Boolean,
     vegetarian: Boolean
   }
