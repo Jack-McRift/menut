@@ -23,7 +23,7 @@ jobs:
 
     - name: npm install, build, and test
       run: |
-        npm install
+        npm ci
         npm run build --if-present
         npm run test --if-present
 
@@ -33,4 +33,4 @@ jobs:
         app-name: 'menut'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_43252dd4e7594a9da873d542bc5874c8 }}
-        package: .
+        package: .\dist
