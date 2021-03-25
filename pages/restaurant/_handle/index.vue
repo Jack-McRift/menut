@@ -30,7 +30,7 @@
             :key="i"
             cols="12"
           >
-            <v-card height="80" class="text" :to="`/restaurant/${$route.params.handle}/${item.handle}`">
+            <v-card height="80" class="text d-flex align-center justify-center" :to="`/restaurant/${$route.params.handle}/${item.handle}`">
               <div class="category-name text-h6 font-weight-light">
                 {{ item.name }}
               </div>
@@ -73,9 +73,6 @@ export default {
 </script>
 
 <style>
-.text {
-  text-align: center;
-}
 .v-toolbar__extension {
   background: rgb(245, 245, 245);
   display: flex;
