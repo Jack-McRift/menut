@@ -21,8 +21,8 @@
           <div v-for="(icon, i) in allergens" :key="i">
             <img style="width: 20px" :src="icon.icon">
           </div>
-          <img v-if="vegan" style="width: 23px; height: 23px" src="/static/tiles/vegan.svg">
-          <img v-if="vegetarian" style="width: 23px; height: 23px" src="/static/tiles/vegetarian.svg">
+          <img v-if="vegan" style="width: 23px; height: 23px" src="/tiles/vegan.svg">
+          <img v-if="vegetarian" style="width: 23px; height: 23px" src="/tiles/vegetarian.svg">
         </div>
         <Money class="font-weight-medium body-1 money mb-1" :value="price" />
       </div>
