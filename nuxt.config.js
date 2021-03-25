@@ -45,7 +45,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://localhost:5001/'
+    baseURL: 'https://menut-api.azurewebsites.net'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
