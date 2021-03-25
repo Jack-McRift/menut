@@ -40,5 +40,11 @@ export const mutations = {
         state.isVegetarian = false
       }
     }
+  },
+  clean (state) {
+    state.items = []
+    state.selectedFilters = []
+    state.isVegan = false
+    state.isVegetarian = []
   }
 }

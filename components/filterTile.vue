@@ -26,6 +26,10 @@ export default {
       type: Boolean,
       value: false
     },
+    clean: {
+      type: Boolean,
+      value: false
+    },
     value: null
   },
   data () {
@@ -34,6 +38,11 @@ export default {
     }
   },
   methods: {
+    cleanFilters () {
+      if (this.clean) {
+        this.$store.commit('filters/clean')
+      }
+    },
     addFilter (value) {
       this.isSelected = !this.isSelected
       if (this.isSelected) {
@@ -41,6 +50,7 @@ export default {
       } else {
         this.$store.commit('filters/deleteFilter', value)
       }
+      this.cleanFilters()
     }
   }
 }

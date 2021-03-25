@@ -4,7 +4,7 @@
       <v-card elevation="0" class="card">
         <v-app-bar elevation="0">
           <v-spacer />
-          <v-btn icon :to="`/restaurant/${$route.params.handle}/${$route.params.menu}`" color="black">
+          <v-btn icon :to="`/restaurant/${$route.params.handle}/${$route.params.menu}`" color="black" @click="clean()">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-app-bar>
@@ -101,6 +101,11 @@ export default {
   async mounted () {
     this.item = await this.$axios.$get(`/api/MenuItems/${this.$route.params.id}?lang=${this.pageLanguage}`)
     console.log(this.item)
+  },
+  methods: {
+    clean () {
+      this.$store.commit('filters/clean')
+    }
   }
 }
 </script>

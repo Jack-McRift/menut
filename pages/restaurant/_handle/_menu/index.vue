@@ -13,7 +13,7 @@
       height="130"
       elevation="1"
     >
-      <v-btn icon :to="`/restaurant/${$route.params.handle}`">
+      <v-btn icon :to="`/restaurant/${$route.params.handle}`" @click="clean">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       <v-app-bar-title :class="{ 'not-show': !show }">
@@ -22,7 +22,7 @@
       <v-spacer />
 
       <template #extension class="white">
-        <v-btn rounded elevation="0" :class="{ 'not-show': show }" :to="`/restaurant/${$route.params.handle}/${$route.params.menu}/search`">
+        <v-btn rounded elevation="0" :class="{ 'not-show': show }" :to="`/restaurant/${$route.params.handle}/${$route.params.menu}/search`" @click="clean">
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
         <v-spacer :class="{ 'not-show': show }" />
@@ -92,7 +92,7 @@
             <p class="px-3 subtitle">
               No mostrar alimentos que contengan:
             </p>
-            <v-container>
+            <v-container class="pa-0">
               <v-row style="max-width: 360px" class="mx-auto">
                 <div
                   v-for="(filterTile, i) in filters"
@@ -117,7 +117,7 @@
                 <div class="d-flex">
                   <filter-tile class="ma-1" :value="'vegetarian'" :name="'vegetariano'" :url="'/filterTiles/vegetarian.svg'" />
                   <filter-tile class="ma-1" :value="'vegan'" :name="'vegano'" :url="'/filterTiles/vegan.svg'" />
-                  <filter-tile class="ma-1" :name="'ninguno'" :url="'/filterTiles/none.svg'" />
+                  <filter-tile class="ma-1" :name="'ninguno'" :clean="true" :url="'/filterTiles/none.svg'" />
                 </div>
               </v-row>
             </v-container>
@@ -249,7 +249,7 @@ export default {
     }
     this.$store.commit('filters/setItems', this.menuData)
 
-    this.filters = await this.$axios.$get(`/api/Allergens?skip=0&take=100&lang=${this.pageLanguage}`)
+    this.filters = await this.$axios.$get(`/api/Allergens?skip=0&take=100&lang=${this.pageLanguage.lang}`)
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.onScroll)
@@ -269,6 +269,9 @@ export default {
       }
       this.show = currentScrollPosition > 100
       this.lastScrollPosition = currentScrollPosition
+    },
+    clean () {
+      this.$store.commit('filters/clean')
     }
   }
 }

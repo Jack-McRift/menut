@@ -11,7 +11,7 @@
           height="60"
         >
           <template #append>
-            <v-btn icon :to="`/restaurant/${$route.params.handle}/${$route.params.menu}`" color="primary">
+            <v-btn icon :to="`/restaurant/${$route.params.handle}/${$route.params.menu}`" color="primary" @click="clean">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </template>
@@ -32,6 +32,9 @@
             :item-id="item.id"
             :description="item.description"
             :url="item.imgUrl"
+            :allergens="item.allergens"
+            :vegan="item.isVegan"
+            :vegetarian="item.isVegetarian"
           />
         </v-list-item>
         <v-divider />
@@ -71,6 +74,11 @@ export default {
       `/api/menuitems/p/menu/${this.$route.params.menu}?lang=${this.pageLanguage.lang}`
     )
     this.filteredData = this.search
+  },
+  methods: {
+    clean () {
+      this.$store.commit('filters/clean')
+    }
   }
 }
 </script>
