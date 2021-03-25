@@ -115,9 +115,9 @@
             <v-container>
               <v-row style="max-width: 360px" class="mx-auto">
                 <div class="d-flex">
-                  <filter-tile class="ma-1" :value="'vegetarian'" :name="'vegetariano'" :url="'/filterTiles/vegetarian.svg'" />
-                  <filter-tile class="ma-1" :value="'vegan'" :name="'vegano'" :url="'/filterTiles/vegan.svg'" />
-                  <filter-tile class="ma-1" :name="'ninguno'" :clean="true" :url="'/filterTiles/none.svg'" />
+                  <filter-tile class="ma-1" :value="'vegetarian'" :name="'vegetariano'" :url="'/tiles/vegetarian.svg'" />
+                  <filter-tile class="ma-1" :value="'vegan'" :name="'vegano'" :url="'/tiles/vegan.svg'" />
+                  <filter-tile class="ma-1" :name="'ninguno'" :clean="true" :url="'/tiles/none.svg'" />
                 </div>
               </v-row>
             </v-container>

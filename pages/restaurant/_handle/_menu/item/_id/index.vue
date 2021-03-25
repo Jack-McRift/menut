@@ -60,7 +60,7 @@
                 class="ma-1"
                 :value="'vegetarian'"
                 :name="'vegetariano'"
-                :url="'/filterTiles/vegetarian.svg'"
+                :url="'/tiles/vegetarian.svg'"
               />
               <filter-tile
                 v-if="item.isVegan"
@@ -68,9 +68,9 @@
                 class="ma-1"
                 :value="'vegan'"
                 :name="'vegano'"
-                :url="'/filterTiles/vegan.svg'"
+                :url="'/tiles/vegan.svg'"
               />
-              <filter-tile v-else class="ma-1" :inactive="true" :name="'ninguno'" :url="'/filterTiles/none.svg'" />
+              <filter-tile v-else class="ma-1" :inactive="true" :name="'ninguno'" :url="'/tiles/none.svg'" />
             </div>
           </v-container>
         </v-card-text>
