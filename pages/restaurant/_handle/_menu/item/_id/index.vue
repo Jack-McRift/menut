@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pa-0">
     <div v-if="item" class="pa-0 cont d-flex justify-center">
       <v-card elevation="0" class="card">
         <v-app-bar elevation="0" class="white">
@@ -13,14 +13,20 @@
         <v-card-title class="text-h5 text-capitalize font-weight-normal pb-0">
           {{ item.name }}
           <v-spacer />
-          <v-btn icon>
-            <v-icon class="ma-2">
-              mdi-twitter
-            </v-icon>
-          </v-btn>
-          <v-btn icon>
-            <v-icon>mdi-instagram</v-icon>
-          </v-btn>
+          <div class="d-flex">
+            <a href="http://twitter.com/?lang=es" class="text-decoration-none">
+              <v-btn icon>
+                <v-icon class="ma-2">
+                  mdi-twitter
+                </v-icon>
+              </v-btn>
+            </a>
+            <a href="http://www.instagram.com/?hl=es" class="text-decoration-none">
+              <v-btn icon>
+                <v-icon>mdi-instagram</v-icon>
+              </v-btn>
+            </a>
+          </div>
         </v-card-title>
         <v-spacer />
         <v-card-subtitle class="text-capitalize grey--text text-h6 pt-0 font-weight-light text--lighten-2 work-sans">
@@ -104,7 +110,6 @@ export default {
   },
   async mounted () {
     this.item = await this.$axios.$get(`/api/MenuItems/${this.$route.params.id}?lang=${this.pageLanguage}`)
-    console.log(this.item)
   },
   methods: {
     clean () {
@@ -116,6 +121,10 @@ export default {
 <style>
 .theme--light.v-app-bar.v-toolbar.v-sheet {
     background-color: fff;
+}
+.white[data-v-314f53c6] {
+    background: #ffffff;
+    padding: 0;
 }
 </style>
 <style scoped>

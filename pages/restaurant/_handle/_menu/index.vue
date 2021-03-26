@@ -45,7 +45,10 @@
               outlined
               elevation="0"
               class="mx-1 dark"
-              :class="{ 'not-show': !show }"
+              :class="{
+                'not-show': !show,
+                'dark': selected
+              }"
               retain-focus-on-click
               value="tabBtn"
               @click="changeCategory(category, show)"
@@ -200,7 +203,8 @@ export default {
       categories: [],
       filteredData: null,
       filters: null,
-      tabsBtn: null
+      tabsBtn: null,
+      selected: false
     }
   },
   computed: {

@@ -13,8 +13,8 @@
       {{ index + 1 }}. {{ title }}
     </h3>
     <div class="d-flex justify-space-between">
-      <div>
-        <p class="text-body-2 font-weight-light">
+      <div class="pb-6">
+        <p class="text-body-2 font-weight-light px-2">
           {{ (description.length > 50)? description.slice(0,50)+'...': description }}
         </p>
         <div class="d-flex">
