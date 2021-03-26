@@ -76,7 +76,9 @@
         </v-card-text>
       </v-card>
     </div>
-    <div v-else />
+    <div v-else class="d-flex justify-center align-center loading">
+      <v-progress-circular indeterminate color="primary" width="10" size="70" />
+    </div>
   </div>
 </template>
 
@@ -138,5 +140,8 @@ export default {
 }
 .card{
   max-width: 700px;
+}
+.loading{
+  height: 80vh;
 }
 </style>

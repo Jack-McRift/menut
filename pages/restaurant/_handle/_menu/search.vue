@@ -27,7 +27,7 @@
         >
           <item
             :index="i"
-            :title="item.title"
+            :title="item.name"
             :price="item.price"
             :item-id="item.id"
             :description="item.description"

@@ -73,11 +73,16 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans&display=swap");
+*{
+  font-family: 'Work Sans';
+}
 .v-toolbar__extension {
   background: rgb(245, 245, 245);
   display: flex;
   justify-content: center;
 }
+
 .size {
   width: 2rem;
 }
