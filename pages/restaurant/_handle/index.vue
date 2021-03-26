@@ -31,9 +31,9 @@
             cols="12"
           >
             <v-card height="80" class="text d-flex align-center justify-center" :to="`/restaurant/${$route.params.handle}/${item.handle}`">
-              <p class="text-h6 ma-0 font-weight-light">
+              <div class="category-name text-h6 font-weight-light">
                 {{ item.name }}
-              </p>
+              </div>
             </v-card>
           </v-col>
         </v-row>

@@ -41,7 +41,7 @@ export default {
       langs: [
         { title: 'Español', iconRoute: '/spain.svg', lang: 'es' },
         { title: 'English', iconRoute: '/united-kingdom.svg', lang: 'en' },
-        { title: 'Portugueses', iconRoute: '/portugal.svg', lang: 'pt-BR' }
+        { title: 'Portugues', iconRoute: '/portugal.svg', lang: 'pt-BR' }
       ]
     }
   },

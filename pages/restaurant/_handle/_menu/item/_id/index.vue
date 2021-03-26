@@ -2,7 +2,7 @@
   <div>
     <div v-if="item" class="pa-0 cont d-flex justify-center">
       <v-card elevation="0" class="card">
-        <v-app-bar elevation="0">
+        <v-app-bar elevation="0" class="white">
           <v-spacer />
           <v-btn icon :to="`/restaurant/${$route.params.handle}/${$route.params.menu}`" color="black" @click="clean()">
             <v-icon>mdi-close</v-icon>
@@ -109,7 +109,11 @@ export default {
   }
 }
 </script>
-
+<style>
+.theme--light.v-app-bar.v-toolbar.v-sheet {
+    background-color: fff;
+}
+</style>
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
 .floating{
