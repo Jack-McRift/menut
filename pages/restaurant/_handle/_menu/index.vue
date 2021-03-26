@@ -39,7 +39,7 @@
           </v-btn>
           <div :class="{ 'not-show': !show }" class="tabs">
             <v-btn
-              v-for="(category, i) in categories"
+              v-for="(category, i) in tabsBtn"
               :key="i"
               rounded
               outlined
@@ -192,16 +192,15 @@ export default {
       absolute: true,
       overlay: false,
       dialog: false,
-      search: '',
       filter: false,
       show: false,
       lastScrollPosition: 0,
-      btnState: false,
       tabBtn: false,
       menuData: null,
       categories: [],
       filteredData: null,
-      filters: null
+      filters: null,
+      tabsBtn: null
     }
   },
   computed: {
@@ -255,6 +254,7 @@ export default {
         this.categories.push(this.menuData[i].categoryName)
       }
     }
+    this.tabsBtn = this.categories
     this.$store.commit('filters/setItems', this.menuData)
 
     this.filters = await this.$axios.$get(`/api/Allergens?skip=0&take=100&lang=${this.pageLanguage.lang}`)

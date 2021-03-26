@@ -50,7 +50,7 @@
         <v-card-text v-else class="grey--text font-weight-light text-body-1 text--darken-4">
           No contiene ningun alergeno.
         </v-card-text>
-        <v-card-text v-if="item.allergens" class="grey--text font-weight-light text-body-1 text--darken-4">
+        <v-card-text v-if="item.isVegan || item.isVegetarian" class="grey--text font-weight-light text-body-1 text--darken-4">
           Apto para: <br>
           <v-container>
             <div class="d-flex">
@@ -70,9 +70,11 @@
                 :name="'vegano'"
                 :url="'/tiles/vegan.svg'"
               />
-              <filter-tile v-else class="ma-1" :inactive="true" :name="'ninguno'" :url="'/tiles/none.svg'" />
             </div>
           </v-container>
+        </v-card-text>
+        <v-card-text v-else class="grey--text font-weight-light text-body-1 text--darken-4">
+          Es apto para cualquier estilo de vida.
         </v-card-text>
       </v-card>
     </div>
