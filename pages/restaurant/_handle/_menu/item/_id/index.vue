@@ -32,7 +32,7 @@
         <v-card-text class="grey--text font-weight-medium text-body-1 text--darken-2">
           Precio: <Money :value="item.price" />
         </v-card-text>
-        <v-card-text v-if="item.allergens" class="grey--text font-weight-light text-body-1 text--darken-4">
+        <v-card-text v-if="item.allergens[0]" class="grey--text font-weight-light text-body-1 text--darken-4">
           Alergenos presentes: <br>
           <v-container>
             <v-row>

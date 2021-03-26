@@ -207,7 +207,7 @@ export default {
       return this.$store.state.filters.selectedFilters
     },
     items () {
-      return this.$store.state.filters?.items ?? []
+      return this.$store.state.filters.items
     },
     isVegan () {
       return this.$store.state.filters.isVegan
@@ -226,6 +226,7 @@ export default {
           this.categories.push(this.menuData[i].categoryName)
         }
       }
+      this.$store.commit('filters/setItems', this.menuData)
     },
     filterSelected () {
       this.$store.commit('filters/setItems', this.menuData)

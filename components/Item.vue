@@ -15,7 +15,7 @@
     <div class="d-flex justify-space-between">
       <div>
         <p class="text-body-2 font-weight-light">
-          {{ description }}
+          {{ (description.length > 50)? description.slice(0,50)+'': description }}
         </p>
         <div class="d-flex">
           <div v-for="(icon, i) in allergens" :key="i">
