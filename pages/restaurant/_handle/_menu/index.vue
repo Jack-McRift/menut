@@ -9,13 +9,13 @@
         light
         shrink-on-scroll
         prominent
-        :src="restaurant.photoUrl"
+        :src="restaurant.photoUrl? restaurant.photoUrl: '/default_banner.jpg'"
         fade-img-on-scroll
         height="130"
         elevation="1"
       >
-        <v-btn icon :to="`/restaurant/${$route.params.handle}`" @click="clean">
-          <v-icon>mdi-arrow-left</v-icon>
+        <v-btn icon  color="rgba(0,0,0,0)" :to="`/restaurant/${$route.params.handle}`" @click="clean">
+          <v-icon color="black">mdi-arrow-left</v-icon>
         </v-btn>
         <v-app-bar-title :class="{ 'not-show': !show }">
           Menuit
@@ -253,6 +253,7 @@ export default {
   async mounted () {
     window.addEventListener('scroll', this.onScroll)
     this.restaurant = await this.$axios.$get(`/api/Restaurants/handle/${this.$route.params.handle}`)
+    document.title = this.restaurant.name + ' - Menut'
     this.menuData = await this.$axios.$get(
       `/api/menuitems/p/menu/${this.$route.params.menu}?lang=${this.pageLanguage.lang}`
     )

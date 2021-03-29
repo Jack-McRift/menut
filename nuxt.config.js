@@ -4,8 +4,7 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   ssr: false,
   head: {
-    titleTemplate: '%s - menut',
-    title: 'menuit',
+    titleTemplate: '%s - Menut',
     htmlAttrs: {
       lang: 'en'
     },

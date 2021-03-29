@@ -13,20 +13,6 @@
         <v-card-title class="text-h5 text-capitalize font-weight-normal pb-0">
           {{ item.name }}
           <v-spacer />
-          <div class="d-flex">
-            <a href="http://twitter.com/?lang=es" target="_blank" class="text-decoration-none">
-              <v-btn icon>
-                <v-icon class="ma-2">
-                  mdi-twitter
-                </v-icon>
-              </v-btn>
-            </a>
-            <a href="http://www.instagram.com/?hl=es" target="_blank" class="text-decoration-none">
-              <v-btn icon>
-                <v-icon>mdi-instagram</v-icon>
-              </v-btn>
-            </a>
-          </div>
         </v-card-title>
         <v-spacer />
         <v-card-subtitle class="text-capitalize grey--text text-h6 pt-0 font-weight-light text--lighten-2 work-sans">

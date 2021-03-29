@@ -9,7 +9,7 @@
         light
         shrink-on-scroll
         prominent
-        :src="restaurant.photoUrl"
+        :src="restaurant.photoUrl? restaurant.photoUrl: '/default_banner.jpg'"
         fade-img-on-scroll
         height="130"
         elevation="1"
@@ -70,7 +70,7 @@ export default {
       .$get(`/api/menu/r/${this.$route.params.handle}?take=100&lang=${this.pageLanguage.lang}`)
     this.loading = false
     this.restaurant = await this.$axios.$get(`/api/Restaurants/handle/${this.$route.params.handle}`)
-    console.log(this.restaurant)
+    document.title = this.restaurant.name + ' - Menut'
   }
 }
 </script>
