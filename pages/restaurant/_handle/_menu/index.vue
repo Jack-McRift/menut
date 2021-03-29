@@ -9,7 +9,7 @@
         light
         shrink-on-scroll
         prominent
-        src="https://www.bizzbeginnings.com/wp-content/uploads/2017/08/chairs-2179044_960_720.jpg"
+        :src="restaurant.photoUrl"
         fade-img-on-scroll
         height="130"
         elevation="1"
@@ -163,6 +163,7 @@
                         :allergens="item.allergens"
                         :vegan="item.isVegan"
                         :vegetarian="item.isVegetarian"
+                        :url="item.photoUrl"
                       />
                     </v-list-item>
                   </div>
@@ -204,7 +205,8 @@ export default {
       filteredData: null,
       filters: null,
       tabsBtn: null,
-      selected: false
+      selected: false,
+      restaurant: null
     }
   },
   computed: {
@@ -250,6 +252,7 @@ export default {
   },
   async mounted () {
     window.addEventListener('scroll', this.onScroll)
+    this.restaurant = await this.$axios.$get(`/api/Restaurants/handle/${this.$route.params.handle}`)
     this.menuData = await this.$axios.$get(
       `/api/menuitems/p/menu/${this.$route.params.menu}?lang=${this.pageLanguage.lang}`
     )

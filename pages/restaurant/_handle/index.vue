@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!menus" />
+    <div v-if="!restaurant" />
     <div v-else>
       <v-app-bar
         ref="box"
@@ -9,7 +9,7 @@
         light
         shrink-on-scroll
         prominent
-        src="https://www.bizzbeginnings.com/wp-content/uploads/2017/08/chairs-2179044_960_720.jpg"
+        :src="restaurant.photoUrl"
         fade-img-on-scroll
         height="130"
         elevation="1"
@@ -50,7 +50,8 @@ export default {
   },
   data: () => ({
     menus: [],
-    loading: true
+    loading: true,
+    restaurant: null
   }),
   computed: {
     pageLanguage () {
@@ -68,6 +69,8 @@ export default {
     this.menus = await this.$axios
       .$get(`/api/menu/r/${this.$route.params.handle}?take=100&lang=${this.pageLanguage.lang}`)
     this.loading = false
+    this.restaurant = await this.$axios.$get(`/api/Restaurants/handle/${this.$route.params.handle}`)
+    console.log(this.restaurant)
   }
 }
 </script>

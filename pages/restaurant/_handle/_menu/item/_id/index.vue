@@ -8,20 +8,20 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-app-bar>
-        <v-img v-if="item.imgUrl" :src="item.imgUrl" />
+        <v-img v-if="item.photoUrl" :src="item.photoUrl" />
         <img v-else src="/no_image_found.svg">
         <v-card-title class="text-h5 text-capitalize font-weight-normal pb-0">
           {{ item.name }}
           <v-spacer />
           <div class="d-flex">
-            <a href="http://twitter.com/?lang=es" class="text-decoration-none">
+            <a href="http://twitter.com/?lang=es" target="_blank" class="text-decoration-none">
               <v-btn icon>
                 <v-icon class="ma-2">
                   mdi-twitter
                 </v-icon>
               </v-btn>
             </a>
-            <a href="http://www.instagram.com/?hl=es" class="text-decoration-none">
+            <a href="http://www.instagram.com/?hl=es" target="_blank" class="text-decoration-none">
               <v-btn icon>
                 <v-icon>mdi-instagram</v-icon>
               </v-btn>
