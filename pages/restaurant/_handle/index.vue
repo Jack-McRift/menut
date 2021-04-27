@@ -6,6 +6,8 @@
         ref="box"
         fixed
         app
+        elevate-on-scroll
+        hide-on-scroll
         light
         :src="restaurant.photoUrl ? restaurant.photoUrl : '/default_banner.jpg'"
         height="130"
