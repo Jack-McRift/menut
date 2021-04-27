@@ -2,7 +2,7 @@
   <v-app light>
     <v-main>
       <v-container class="white">
-        <nuxt class="white"/>
+        <nuxt class="white" />
       </v-container>
     </v-main>
     <v-footer :absolute="!fixed" app>
@@ -29,10 +29,10 @@ export default {
 }
 </script>
 <style scoped>
-*{
-  font-family: "Work Sans", sans-serif;
+* {
+  font-family: 'Work Sans', sans-serif;
 }
-.white{
+.white {
   background: #ffffff;
 }
 </style>

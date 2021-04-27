@@ -7,9 +7,8 @@
         fixed
         app
         light
-        shrink-on-scroll
         prominent
-        :src="restaurant.photoUrl? restaurant.photoUrl: '/default_banner.jpg'"
+        :src="restaurant.photoUrl ? restaurant.photoUrl : '/default_banner.jpg'"
         fade-img-on-scroll
         height="130"
         elevation="1"
@@ -25,12 +24,12 @@
 
       <v-container v-if="!loading">
         <v-row>
-          <v-col
-            v-for="(item, i) in menus"
-            :key="i"
-            cols="12"
-          >
-            <v-card height="80" class="text d-flex align-center justify-center" :to="`/restaurant/${$route.params.handle}/${item.handle}`">
+          <v-col v-for="(item, i) in menus" :key="i" cols="12">
+            <v-card
+              height="80"
+              class="text d-flex align-center justify-center"
+              :to="`/restaurant/${$route.params.handle}/${item.handle}`"
+            >
               <div class="category-name text-h6 font-weight-light">
                 {{ item.name }}
               </div>
@@ -60,24 +59,28 @@ export default {
   },
   watch: {
     async pageLanguage () {
-      this.menus = await this.$axios
-        .$get(`/api/menu/r/${this.$route.params.handle}?take=100&lang=${this.pageLanguage.lang}`)
+      this.menus = await this.$axios.$get(
+        `/api/menu/r/${this.$route.params.handle}?take=100&lang=${this.pageLanguage.lang}`
+      )
       this.loading = false
     }
   },
   async mounted () {
-    this.menus = await this.$axios
-      .$get(`/api/menu/r/${this.$route.params.handle}?take=100&lang=${this.pageLanguage.lang}`)
+    this.menus = await this.$axios.$get(
+      `/api/menu/r/${this.$route.params.handle}?take=100&lang=${this.pageLanguage.lang}`
+    )
     this.loading = false
-    this.restaurant = await this.$axios.$get(`/api/Restaurants/handle/${this.$route.params.handle}`)
+    this.restaurant = await this.$axios.$get(
+      `/api/Restaurants/handle/${this.$route.params.handle}`
+    )
     document.title = this.restaurant.name + ' - Menut'
   }
 }
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans&display=swap");
-*{
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+* {
   font-family: 'Work Sans';
 }
 .v-toolbar__extension {

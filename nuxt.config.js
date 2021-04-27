@@ -13,18 +13,14 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-  ],
+  css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -34,7 +30,8 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    'nuxt-i18n'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -68,6 +65,65 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
+  build: {},
+
+  i18n: {
+    locales: ['es', 'en', 'it', 'de', 'fr', 'rs', 'pt'],
+    defaultLocale: 'en',
+    vueI18n: {
+      fallbackLocale: 'en',
+      messages: {
+        es: {
+          filtros: 'Filtros',
+          alergenos: 'Alergenos',
+          alerTitle: 'No mostrar alimentos que contengan:',
+          lifeStyle: 'Estilo de vida',
+          lifeTitle: 'Solo mostrar los alimentos que sean aptos para:'
+        },
+        en: {
+          filtros: 'Filters',
+          alergenos: 'Allergens',
+          alerTitle: 'Do not show foods that contain:',
+          lifeStyle: 'Lifestyle',
+          lifeTitle: 'Only show foods that are suitable for:'
+        },
+        it: {
+          filtros: 'Filtri',
+          alergenos: 'Allergeni',
+          alerTitle: 'Non mostrare cibi che contengono:',
+          lifeStyle: 'Stile di vita',
+          lifeTitle: 'Mostra solo cibi adatti a:'
+        },
+        de: {
+          filtros: 'Filter',
+          alergenos: 'Allergene',
+          alerTitle:
+            'Zeigen Sie keine Lebensmittel an, die Folgendes enthalten:',
+          lifeStyle: 'Lebensstil',
+          lifeTitle: 'Zeigen Sie nur Lebensmittel an, die geeignet sind für:'
+        },
+        fr: {
+          filtros: 'Les allergènes',
+          alergenos: 'Alergenos',
+          alerTitle: 'Ne montrez pas les aliments qui contiennent:',
+          lifeStyle: 'Style de vie',
+          lifeTitle: "N'afficher que les aliments qui conviennent:"
+        },
+        rs: {
+          filtros: 'Фильтры',
+          alergenos: 'Аллергены',
+          alerTitle: 'Не показывайте продукты, содержащие:',
+          lifeStyle: 'Стиль жизни',
+          lifeTitle: 'Показывайте только те продукты, которые подходят для:'
+        },
+        pt: {
+          filtros: 'Filtros',
+          alergenos: 'Alérgenos',
+          alerTitle: 'Não mostre alimentos que contenham:',
+          lifeStyle: 'Estilo de vida',
+          lifeTitle: 'Mostre apenas alimentos adequados para:'
+        }
+      }
+    }
   }
 }

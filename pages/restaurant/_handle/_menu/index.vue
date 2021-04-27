@@ -9,13 +9,20 @@
         light
         shrink-on-scroll
         prominent
-        :src="restaurant.photoUrl? restaurant.photoUrl: '/default_banner.jpg'"
+        :src="restaurant.photoUrl ? restaurant.photoUrl : '/default_banner.jpg'"
         fade-img-on-scroll
         height="130"
         elevation="1"
       >
-        <v-btn icon  color="rgba(0,0,0,0)" :to="`/restaurant/${$route.params.handle}`" @click="clean">
-          <v-icon color="black">mdi-arrow-left</v-icon>
+        <v-btn
+          icon
+          color="rgba(0,0,0,0)"
+          :to="`/restaurant/${$route.params.handle}`"
+          @click="clean"
+        >
+          <v-icon color="black">
+            mdi-arrow-left
+          </v-icon>
         </v-btn>
         <v-app-bar-title :class="{ 'not-show': !show }">
           Menuit
@@ -23,7 +30,15 @@
         <v-spacer />
 
         <template #extension class="white">
-          <v-btn rounded elevation="0" :class="{ 'not-show': show }" :to="`/restaurant/${$route.params.handle}/${$route.params.menu}/search`" @click="clean">
+          <v-btn
+            rounded
+            elevation="0"
+            :class="{ 'not-show': show }"
+            :to="
+              `/restaurant/${$route.params.handle}/${$route.params.menu}/search`
+            "
+            @click="clean"
+          >
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
           <v-spacer :class="{ 'not-show': show }" />
@@ -47,7 +62,7 @@
               class="mx-1 dark"
               :class="{
                 'not-show': !show,
-                'dark': selected
+                dark: selected
               }"
               retain-focus-on-click
               value="tabBtn"
@@ -77,7 +92,7 @@
                   mdi-filter-outline
                 </v-icon>
                 <h2 class="title">
-                  Filtrar por
+                  {{ $t('filtros') }}
                 </h2>
               </div>
               <v-btn
@@ -91,10 +106,10 @@
             </div>
             <div>
               <h2 class="px-3 primary--text title mb-1">
-                Alergenos
+                {{ $t('alergenos') }}
               </h2>
               <p class="px-3 subtitle">
-                No mostrar alimentos que contengan:
+                {{ $t('alerTitle') }}
               </p>
               <v-container class="pa-0 ">
                 <v-row style="max-width: 360px" class="mx-auto">
@@ -104,24 +119,43 @@
                     class="ma-1"
                     style="width: 80px; height: 80px"
                   >
-                    <filter-tile :name="filterTile.name" :url="filterTile.icon" :value="filterTile.id" />
+                    <filter-tile
+                      :name="filterTile.name"
+                      :url="filterTile.icon"
+                      :value="filterTile.id"
+                    />
                   </div>
                 </v-row>
               </v-container>
             </div>
             <div class="mt-4">
               <h2 class="px-3 primary--text title mb-1">
-                Estilo de vida
+                {{ $t('lifeStyle') }}
               </h2>
               <p class="px-3 subtitle">
-                Solo mostrar los alimentos que sean aptos para:
+                {{ $t('lifeTitle') }}
               </p>
               <v-container>
                 <v-row style="max-width: 360px" class="mx-auto">
                   <div class="d-flex">
-                    <filter-tile class="ma-1" :value="'vegetarian'" :name="'vegetariano'" :url="'/tiles/vegetarian.svg'" />
-                    <filter-tile class="ma-1" :value="'vegan'" :name="'vegano'" :url="'/tiles/vegan.svg'" />
-                    <filter-tile class="ma-1" :name="'ninguno'" :clean="true" :url="'/tiles/none.svg'" />
+                    <filter-tile
+                      class="ma-1"
+                      :value="'vegetarian'"
+                      :name="$t('lifeTitle')"
+                      :url="'/tiles/vegetarian.svg'"
+                    />
+                    <filter-tile
+                      class="ma-1"
+                      :value="'vegan'"
+                      :name="'vegano'"
+                      :url="'/tiles/vegan.svg'"
+                    />
+                    <filter-tile
+                      class="ma-1"
+                      :name="'ninguno'"
+                      :clean="true"
+                      :url="'/tiles/none.svg'"
+                    />
                   </div>
                 </v-row>
               </v-container>
@@ -139,16 +173,15 @@
           >
             <v-container>
               <v-row>
-                <v-list-item-title class="text-h6 font-weight-black work-sans text-capitalize">
+                <v-list-item-title
+                  class="text-h6 font-weight-black work-sans text-capitalize"
+                >
                   {{ category }}
                 </v-list-item-title>
               </v-row>
               <v-row>
                 <v-list>
-                  <div
-                    v-for="(item, i) in items"
-                    :key="i"
-                  >
+                  <div v-for="(item, i) in items" :key="i">
                     <v-list-item
                       v-if="item.categoryName === category"
                       three-line
@@ -229,7 +262,7 @@ export default {
   watch: {
     async pageLanguage () {
       this.menuData = await this.$axios.$get(
-      `/api/menuitems/p/menu/${this.$route.params.menu}?lang=${this.pageLanguage.lang}`
+        `/api/menuitems/p/menu/${this.$route.params.menu}?lang=${this.pageLanguage.lang}`
       )
       this.categories = []
       for (let i = 0; i < this.menuData.length; i++) {
@@ -238,7 +271,12 @@ export default {
         }
       }
       this.$store.commit('filters/setItems', this.menuData)
-      this.filters = await this.$axios.$get(`/api/Allergens?skip=0&take=100&lang=${this.pageLanguage.lang}`)
+      this.filters = await this.$axios.$get(
+        `/api/Allergens?skip=0&take=100&lang=${this.pageLanguage.lang}`
+      )
+
+      // Cambiar el local language
+      this.$i18n.setLocale(this.pageLanguage.lang)
     },
     filterSelected () {
       this.$store.commit('filters/setItems', this.menuData)
@@ -252,7 +290,9 @@ export default {
   },
   async mounted () {
     window.addEventListener('scroll', this.onScroll)
-    this.restaurant = await this.$axios.$get(`/api/Restaurants/handle/${this.$route.params.handle}`)
+    this.restaurant = await this.$axios.$get(
+      `/api/Restaurants/handle/${this.$route.params.handle}`
+    )
     document.title = this.restaurant.name + ' - Menut'
     this.menuData = await this.$axios.$get(
       `/api/menuitems/p/menu/${this.$route.params.menu}?lang=${this.pageLanguage.lang}`
@@ -265,7 +305,11 @@ export default {
     this.tabsBtn = this.categories
     this.$store.commit('filters/setItems', this.menuData)
 
-    this.filters = await this.$axios.$get(`/api/Allergens?skip=0&take=100&lang=${this.pageLanguage.lang}`)
+    this.filters = await this.$axios.$get(
+      `/api/Allergens?skip=0&take=100&lang=${this.pageLanguage.lang}`
+    )
+
+    this.$i18n.setLocale(this.pageLanguage.lang)
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.onScroll)
@@ -293,9 +337,9 @@ export default {
 }
 </script>
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
 
-.v-dialog{
+.v-dialog {
   background: white !important;
   margin: 0;
 }
@@ -322,7 +366,7 @@ export default {
   background: black;
   color: white;
 }
-.loading{
+.loading {
   height: 80vh;
 }
 </style>
