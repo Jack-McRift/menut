@@ -1,17 +1,13 @@
 <template>
   <div>
     <div v-if="!restaurant" />
-    <div v-else class="overflow-hidden">
+    <div v-else>
       <v-app-bar
         ref="box"
         fixed
         app
         light
-        prominent
-        shrink-on-scroll
-        scroll-threshold="500"
         :src="restaurant.photoUrl ? restaurant.photoUrl : '/default_banner.jpg'"
-        fade-img-on-scroll
         height="130"
         elevation="1"
       >

@@ -216,7 +216,7 @@
 
 <script>
 import Languages from '~/components/Languages.vue'
-import FilterTile from '~/components/FilterTile.vue'
+import FilterTile from '~/components/filterTile.vue'
 import Item from '~/components/Item.vue'
 export default {
   components: {
