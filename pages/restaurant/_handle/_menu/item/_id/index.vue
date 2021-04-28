@@ -2,19 +2,19 @@
   <div class="pa-0">
     <div v-if="item" class="pa-0 cont d-flex justify-center">
       <v-card elevation="0" class="card">
-        <v-app-bar elevation="0" class="white">
-          <v-spacer />
+        <div class="parent">
           <v-btn
             icon
             :to="`/restaurant/${$route.params.handle}/${$route.params.menu}`"
-            color="black"
+            color="white"
+            class="child"
             @click="clean()"
           >
             <v-icon>mdi-close</v-icon>
           </v-btn>
-        </v-app-bar>
-        <v-img v-if="item.photoUrl" :src="item.photoUrl" />
-        <img v-else src="/no_image_found.svg">
+          <v-img v-if="item.photoUrl" :src="item.photoUrl" />
+          <img v-else src="/no_image_found.svg">
+        </div>
         <v-card-title class="text-h5 text-capitalize font-weight-normal pb-0">
           {{ item.name }}
           <v-spacer />
@@ -106,7 +106,7 @@
 
 <script>
 import Money from '~/components/Money.vue'
-import FilterTile from '~/components/FilterTile.vue'
+import FilterTile from '~/components/filterTile.vue'
 export default {
   components: {
     Money,
@@ -170,5 +170,16 @@ export default {
 }
 .loading {
   height: 80vh;
+}
+.parent {
+  position: relative;
+}
+.child {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 1;
+  background-color: black;
+  opacity: 0.8;
 }
 </style>

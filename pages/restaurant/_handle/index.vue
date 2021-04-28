@@ -2,8 +2,12 @@
   <div>
     <div v-if="!restaurant" />
     <div v-else>
-      <v-overlay :value="overlay">
+      <v-overlay :value="overlay" opacity="1">
+        <div>X</div>
         <div>Nombre del restaurante</div>
+        <div>Descripcion del restaurante</div>
+        <div>Direccion</div>
+        <div>Whatsapp - Mail - Telefono</div>
       </v-overlay>
       <v-app-bar
         ref="box"
@@ -61,7 +65,8 @@ export default {
     menus: [],
     loading: true,
     restaurant: null,
-    overlay: false
+    overlay: false,
+    profile: []
   }),
   computed: {
     pageLanguage () {
@@ -74,6 +79,8 @@ export default {
         `/api/menu/r/${this.$route.params.handle}?take=100&lang=${this.pageLanguage.lang}`
       )
       this.loading = false
+
+      // Dispara el handle para cambiar el idioma de la descripcion tambien
     }
   },
   async mounted () {
