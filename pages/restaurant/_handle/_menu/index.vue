@@ -7,8 +7,8 @@
         fixed
         app
         light
-        shrink-on-scroll
-        prominent
+        elevate-on-scroll
+        hide-on-scroll
         :src="restaurant.photoUrl ? restaurant.photoUrl : '/default_banner.jpg'"
         fade-img-on-scroll
         height="130"
@@ -20,7 +20,7 @@
           :to="`/restaurant/${$route.params.handle}`"
           @click="clean"
         >
-          <v-icon color="black">
+          <v-icon color="black" class="border">
             mdi-arrow-left
           </v-icon>
         </v-btn>
@@ -53,6 +53,21 @@
             <v-icon>mdi-filter-outline</v-icon>
           </v-btn>
           <div :class="{ 'not-show': !show }" class="tabs">
+            <v-btn
+              rounded
+              outlined
+              elevation="0"
+              class="mx-1 dark"
+              :class="{
+                'not-show': !show,
+                dark: selected
+              }"
+              retain-focus-on-click
+              value="tabBtn"
+              @click="viewAll"
+            >
+              Ver todos
+            </v-btn>
             <v-btn
               v-for="(category, i) in tabsBtn"
               :key="i"
@@ -164,7 +179,7 @@
         </v-dialog>
       </div>
       <!-- content -->
-      <main class="d-flex justify-center mt-10">
+      <main class="d-flex justify-center">
         <v-list light class="pa-0">
           <v-list-item
             v-for="(category, index) in categories"
@@ -174,7 +189,7 @@
             <v-container>
               <v-row>
                 <v-list-item-title
-                  class="text-h6 font-weight-black work-sans text-capitalize"
+                  class="text-h6 font-weight-black work-sans text-capitalize mt-5"
                 >
                   {{ category }}
                 </v-list-item-title>
@@ -332,6 +347,18 @@ export default {
     },
     clean () {
       this.$store.commit('filters/clean')
+    },
+    async viewAll () {
+      this.menuData = await this.$axios.$get(
+        `/api/menuitems/p/menu/${this.$route.params.menu}?lang=${this.pageLanguage.lang}`
+      )
+      this.categories = []
+
+      for (let i = 0; i < this.menuData.length; i++) {
+        if (!this.categories.includes(this.menuData[i].categoryName)) {
+          this.categories.push(this.menuData[i].categoryName)
+        }
+      }
     }
   }
 }
@@ -368,5 +395,10 @@ export default {
 }
 .loading {
   height: 80vh;
+}
+.border {
+  padding: 15px;
+  background-color: white;
+  border-radius: 50%;
 }
 </style>

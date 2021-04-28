@@ -2,6 +2,9 @@
   <div>
     <div v-if="!restaurant" />
     <div v-else>
+      <v-overlay :value="overlay">
+        <div>Nombre del restaurante</div>
+      </v-overlay>
       <v-app-bar
         ref="box"
         fixed
@@ -13,6 +16,13 @@
         height="130"
         elevation="1"
       >
+        <v-spacer />
+
+        <v-btn icon class="icons" @click="overlay = !overlay">
+          <v-icon>
+            mdi-information-outline
+          </v-icon>
+        </v-btn>
         <template #extension>
           <div class="d-felx justify-center">
             <v-spacer />
@@ -50,7 +60,8 @@ export default {
   data: () => ({
     menus: [],
     loading: true,
-    restaurant: null
+    restaurant: null,
+    overlay: false
   }),
   computed: {
     pageLanguage () {
@@ -91,5 +102,12 @@ export default {
 
 .size {
   width: 2rem;
+}
+
+.icons {
+  background-color: white;
+  padding: 15px;
+  color: black;
+  border-radius: 50%;
 }
 </style>

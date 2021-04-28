@@ -44,7 +44,7 @@
         elevation="0"
         tile
       >
-        <v-img :src="url" width="100" height="100" cover />
+        <v-img :src="url" width="100" height="100" cover class="border" />
       </v-card>
       <img
         v-else
@@ -75,5 +75,8 @@ export default {
 .money {
   position: absolute;
   bottom: 0;
+}
+.border {
+  border-radius: 10px !important;
 }
 </style>
